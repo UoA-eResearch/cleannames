@@ -31,7 +31,7 @@ def clean_filename(file:)
     end
     
     puts "renaming '#{file}' to '#{new_file}'"
-    FileUtils.mv(file, "./#{new_file}")
+    FileUtils.mv(file, "./#{new_file}") #oddly, file doesn't need the Dir qualified, but new_file does.
   end
   return new_file
 end
@@ -60,6 +60,10 @@ def rename_directory(directory:)
 end
 
 
+#If CLI version then call
+# ARGV.each { |dir| rename_directory(directory: dir) }
+
+#Mac app version, then ask the user for the folder.
 foldername = `osascript -e 'tell application "System Events" to activate' -e 'tell application "System Events" to return POSIX path of (choose folder with prompt "select an image file ")'`.chomp
 if foldername != nil && foldername != ''
   rename_directory(directory: foldername)
